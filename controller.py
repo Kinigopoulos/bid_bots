@@ -6,6 +6,8 @@ from all_in_bot import AllInBot
 from random_bot import RandomBot
 from zero_bot import ZeroBot
 from average_bot import AverageBot
+from bit_below_bot import BitBelowBot
+from all_in_half_bot import AllInHalfBot
 
 
 # Enter all the bots here
@@ -13,7 +15,9 @@ bot_list = [
     AllInBot,
     RandomBot,
     ZeroBot,
-    AverageBot
+    AverageBot,
+    BitBelowBot,
+    AllInHalfBot
 ]
 
 
@@ -29,7 +33,7 @@ def generate_hash_number(num):
 def decide_order(ls):
     hash = int(hashlib.sha1(str(ls).encode()).hexdigest(), 16) % hash_number
     nls = []
-    for i in range(4, 0, -1):
+    for i in range(number_of_players, 0, -1):
         nls.append(ls[hash % i])
         del ls[hash % i]
         hash //= i
@@ -92,16 +96,17 @@ def auction(ls):
             dollar[prev_win] -= prev_bid
 
 
-def organise_auction(player_list, m, n):
-    if n == -1:
+def organise_auction(player_list, m):
+    if len(player_list) == number_of_players:
         auction(player_list)
     else:
-        for new_player in range(m + 1, N - n):
-            player_list.append(new_player)
-            organise_auction(player_list, m + 1, n - 1)
+        for new_player in range(m + 1, N):
+            new_list = player_list.copy()
+            new_list.append(new_player)
+            organise_auction(new_list, new_player)
 
 
-organise_auction([], -1, N - 1)
+organise_auction([], -1)
 res = sorted(map(list, zip(score, total, bot_list)), key=lambda k: (-k[0], k[1]))
 
 
