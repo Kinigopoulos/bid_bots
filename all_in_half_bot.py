@@ -1,3 +1,5 @@
+# kinigos
+
 class AllInHalfBot:
     def __init__(self):
         self.dollar = 0

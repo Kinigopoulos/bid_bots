@@ -8,7 +8,9 @@ from zero_bot import ZeroBot
 from average_bot import AverageBot
 from bit_below_bot import BitBelowBot
 from all_in_half_bot import AllInHalfBot
-
+from counter_bot import CounterBot
+from collecting_bot import CollectingBot
+from last_win_bot import LastWinBot
 
 # Enter all the bots here
 bot_list = [
@@ -17,7 +19,10 @@ bot_list = [
     ZeroBot,
     AverageBot,
     BitBelowBot,
-    AllInHalfBot
+    AllInHalfBot,
+    CounterBot,
+    CollectingBot,
+    LastWinBot
 ]
 
 

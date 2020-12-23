@@ -1,3 +1,5 @@
+# kinigos
+
 from my_rand import MyRand
 
 
