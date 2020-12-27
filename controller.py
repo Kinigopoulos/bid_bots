@@ -11,6 +11,11 @@ from all_in_half_bot import AllInHalfBot
 from counter_bot import CounterBot
 from collecting_bot import CollectingBot
 from last_win_bot import LastWinBot
+from half_in_bot import HalfInBot
+from persistent_bot import PersistentBot
+from average_biding_bot import AverageBidingBot
+from no_tie_bot import NoTieBot
+from selective_bot import SelectiveBot
 
 # Enter all the bots here
 bot_list = [
@@ -22,7 +27,12 @@ bot_list = [
     AllInHalfBot,
     CounterBot,
     CollectingBot,
-    LastWinBot
+    LastWinBot,
+    HalfInBot,
+    PersistentBot,
+    AverageBidingBot,
+    NoTieBot,
+    SelectiveBot
 ]
 
 
