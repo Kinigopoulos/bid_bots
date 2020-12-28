@@ -1,6 +1,6 @@
 #This bot aspires to win the first round by bidding 499. Will continue to go all-in minus 1 to avoid conflict until it has won.
 #Then it will just go all-in.
-class attack_bot:
+class attackBot:
     def __init__(self): 
       self.dollar = 0
       self.round = 0
