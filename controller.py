@@ -16,6 +16,9 @@ from persistent_bot import PersistentBot
 from average_biding_bot import AverageBidingBot
 from no_tie_bot import NoTieBot
 from selective_bot import SelectiveBot
+from all_plus_one import AllPlusOne
+from attack_bot import attackBot
+from thorn_on_my_side import ThornOnMySide
 
 # Enter all the bots here
 bot_list = [
@@ -32,7 +35,10 @@ bot_list = [
     PersistentBot,
     AverageBidingBot,
     NoTieBot,
-    SelectiveBot
+    SelectiveBot,
+    AllPlusOne,
+    attackBot,
+    ThornOnMySide
 ]
 
 
