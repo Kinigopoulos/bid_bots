@@ -19,6 +19,8 @@ from selective_bot import SelectiveBot
 from all_plus_one import AllPlusOne
 from attack_bot import AttackBot
 from thorn_on_my_side import ThornOnMySide
+from max_possible_bot import MaxPossibleBot
+from linear_regression_bot import LinearRegressionBot
 
 # Enter all the bots here
 bot_list = [
@@ -38,7 +40,9 @@ bot_list = [
     SelectiveBot,
     AllPlusOne,
     AttackBot,
-    ThornOnMySide
+    ThornOnMySide,
+    MaxPossibleBot,
+    LinearRegressionBot
 ]
 
 
@@ -139,3 +143,4 @@ for i in range(N - 1):
         res[i][2] = res[i + 1][2] = TIE_REMOVED
 for sc, t, tp in res:
     print('%-20s Score: %-6d Total: %d' % (tp.__name__, sc, t))
+
