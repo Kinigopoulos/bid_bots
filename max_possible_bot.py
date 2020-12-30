@@ -5,6 +5,8 @@ class MaxPossibleBot:
     def __init__(self):
         self.dollar = 0
         self.win_amounts=[]
+        self.round=0
+
 
     def max_win_amount_bid(self):
         self.win_amounts.sort(reverse=True) #sorting the win_amounts from the highest to lowest
@@ -14,6 +16,7 @@ class MaxPossibleBot:
         return self.dollar #bot can't bid from the previous win_amounts so it goes all in
 
     def play_round(self, winner, win_amount):
+        self.round+=1
         self.dollar += 500
         if winner!=-1:
             self.win_amounts.append(win_amount) #adding from the current winner his win_amount

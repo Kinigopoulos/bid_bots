@@ -1,14 +1,16 @@
 # author thomas
-
+from my_rand import MyRand
 # tries with linear regression like machine learning to find a relation like
 # Y=a+bX with Y representing the winning biding amount and X the current budget.
 class LinearRegressionBot:
+
     def __init__(self):
         self.players_money = [0] * 4
         self.a=0
-        self.b=1
+        self.b=MyRand(123).randint(5,9)/10 #starting with a relation to avoid ties
         self.budget_of_winners=[]
         self.winners_biding=[]
+        self.round=0
 
 
     def two_different_budgets(self):
@@ -21,7 +23,7 @@ class LinearRegressionBot:
         X=self.players_money[0] #current budget
         Y=self.a+self.b*X #winning biding amount
         if Y<=0: return 0 #cause you can't bid smaller than 0
-        return min(X,Y) #if it can't afford Y it plays it all in
+        return min(X,Y) if self.round<10 else X #if it can't afford Y or it is the final round it plays it all in
 
     def calculating_relation(self):
         mean_budget=sum(self.budget_of_winners)/len(self.budget_of_winners)
@@ -35,6 +37,7 @@ class LinearRegressionBot:
         self.a=mean_biding-self.b*mean_budget
 
     def play_round(self, winner, win_amount):
+        self.round+=1
         self.players_money = [d + 500 for d in self.players_money]
         if winner!=-1:
             self.budget_of_winners.append(self.players_money[winner]-500) #saves the budget that winner had the last turn
@@ -44,7 +47,6 @@ class LinearRegressionBot:
          #we need at least 2 different winning budgets to do a linear regression
         if(self.two_different_budgets()):
             self.calculating_relation()
-
         return self.linear_regression_bid()
 
 
