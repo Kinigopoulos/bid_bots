@@ -2,13 +2,13 @@
 from global_variables import get_dollars, get_rounds
 
 
-# This bot persists to win with 1001. It's a tricky amount cause the opponents need to charge
-# 3 turns to beat this bid. Also, it's very economical instead of biding 1250 and 1500.
+# This bot persists to win with get_dollars()*2+1. It's economical and tricky amount cause the opponents
+# need to charge 3 turns to beat this bid.
 # In the final round bot stops being persistent and bids all the money.
 class PersistentBot:
     def __init__(self):
         self.dollar = 0
-        self.win_with_this = 1001
+        self.win_with_this = get_dollars()*2+1
         self.round = 0
 
     def play_round(self, winner, win_amount):

@@ -20,7 +20,10 @@ class SelectiveBot:
 
     def bit_below(self):
         average_bit_bellow = self.sumof_bit_bellow_values / self.behaviours["not specific value"][0]
-        return self.players_money[0] - average_bit_bellow
+        total_biding=self.players_money[0]-average_bit_bellow
+        if total_biding>=0:
+            return total_biding
+        return self.allin() #all in if the budget is lower than average_bit_bellow
 
     def zero(self):
         return 0
