@@ -1,3 +1,4 @@
+# This class is used only for generating random numbers with a specific seed
 class MyRand:
     def __init__(self, seed):
         self.val = seed
