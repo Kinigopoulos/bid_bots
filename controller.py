@@ -23,28 +23,38 @@ from thorn_on_my_side import ThornOnMySide
 from max_possible_bot import MaxPossibleBot
 from linear_regression_bot import LinearRegressionBot
 
+
 # Enter all the bots here
-bot_list = [
-    AllInBot,
-    RandomBot,
-    ZeroBot,
-    AverageBot,
-    BitBelowBot,
-    AllInHalfBot,
-    CounterBot,
-    CollectingBot,
-    LastWinBot,
-    HalfInBot,
-    PersistentBot,
-    AverageBidingBot,
-    NoTieBot,
-    SelectiveBot,
-    AllPlusOne,
-    AttackBot,
-    ThornOnMySide,
-    MaxPossibleBot,
-    LinearRegressionBot
-]
+def get_bots():
+    return [
+        AllInBot,
+        RandomBot,
+        ZeroBot,
+        AverageBot,
+        BitBelowBot,
+        AllInHalfBot,
+        CounterBot,
+        CollectingBot,
+        LastWinBot,
+        HalfInBot,
+        PersistentBot,
+        AverageBidingBot,
+        NoTieBot,
+        SelectiveBot,
+        AllPlusOne,
+        AttackBot,
+        ThornOnMySide,
+        MaxPossibleBot,
+        LinearRegressionBot
+    ]
+
+
+# Resets scores, money and bots
+def reset_scores():
+    global score, total, bot_list
+    score = [0] * N
+    total = [0] * N
+    bot_list = get_bots()
 
 
 def generate_hash_number(num):
@@ -84,7 +94,7 @@ def auction(ls):
                 tmp_win += 1
                 if not winner_is_known:
                     tmp_win = -10
-
+            # Get bot 's bid
             bid = int(bots[i].play_round(tmp_win, prev_bid))
             if bid < 0 or bid > dollar[i]:
                 raise ValueError(pl[i], bots[i].__class__, bid)
@@ -110,6 +120,7 @@ def auction(ls):
                         winner = i
                         break
 
+        # Update winner's score and save its id and amount given for next round
         if winner == -1:
             prev_win, prev_bid = -1, -1
         else:
@@ -119,6 +130,7 @@ def auction(ls):
             dollar[prev_win] -= prev_bid
 
 
+# Recursive function to produce every combination for bots to play
 def organise_auction(player_list, m):
     if len(player_list) == number_of_players:
         auction(player_list)
@@ -129,6 +141,8 @@ def organise_auction(player_list, m):
             organise_auction(new_list, new_player)
 
 
+# global variables and game rules
+bot_list = get_bots()
 number_of_players = 4
 number_of_rounds = 10
 hash_number = generate_hash_number(number_of_players)
@@ -141,27 +155,47 @@ score = [0] * N
 total = [0] * N
 
 
-def play_auction_game(players, rounds, dollars_, ties, know_winner):
+# Print bots' scores
+def print_bots(remove_ties=False):
+    print("Players per auction: %d, " % number_of_players, end="")
+    print("Number of rounds: %d, " % number_of_rounds, end="")
+    print("Dollars given per round: %d$, " % dollars, end="")
+    print("Ties disqualify: %s, " % ties_disqualify, end="")
+    print("Bots know the winner: %s" % winner_is_known)
+
+    # Sort bots according to best score.
+    res = sorted(map(list, zip(score, total, bot_list)), key=lambda k: (-k[0], k[1]))
+
+    if remove_ties:
+        class TieRemoved:
+            pass
+
+        for i in range(N - 1):
+            if (res[i][0], res[i][1]) == (res[i + 1][0], res[i + 1][1]):
+                res[i][2] = res[i + 1][2] = TieRemoved
+    for sc, t, tp in res:
+        print('%-20s Score: %-6d Total: %d' % (tp.__name__, sc, t))
+    print()
+
+
+# Get the scores
+def get_scores():
+    res = sorted(map(list, zip(score, total, bot_list)), key=lambda k: (-k[0], k[1]))
+    return res
+
+
+def play_auction_game(players, rounds, dollars_, ties, known_winner):
     global number_of_players, number_of_rounds, dollars, hash_number, ties_disqualify, winner_is_known
+    # Set every game rule for the game
     number_of_players = players
     number_of_rounds = rounds
     dollars = dollars_
     hash_number = generate_hash_number(number_of_players)
     ties_disqualify = ties
-    winner_is_known = know_winner
+    winner_is_known = known_winner
 
+    # Set the global variables for the bots
     set_variables(dollars, number_of_players, number_of_rounds)
 
     # Organise recursively all possible combinations with the bots.
     organise_auction([], -1)
-    # Sort bots according to best score.
-    res = sorted(map(list, zip(score, total, bot_list)), key=lambda k: (-k[0], k[1]))
-
-    class TieRemoved:
-        pass
-
-    for i in range(N - 1):
-        if (res[i][0], res[i][1]) == (res[i + 1][0], res[i + 1][1]):
-            res[i][2] = res[i + 1][2] = TieRemoved
-    for sc, t, tp in res:
-        print('%-20s Score: %-6d Total: %d' % (tp.__name__, sc, t))
